@@ -1,6 +1,9 @@
-import P from 'prop-types';
+import { useContext } from 'react';
+import { CartContext } from '../store/shopping-cart-context';
 
-export default function Cart({ items, onUpdateItemQuantity }) {
+export default function Cart() {
+  const { items, UpdateItemQuantity } = useContext(CartContext);
+
   const totalPrice = items.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0,
@@ -22,11 +25,11 @@ export default function Cart({ items, onUpdateItemQuantity }) {
                   <span> ({formattedPrice})</span>
                 </div>
                 <div className="cart-item-actions">
-                  <button onClick={() => onUpdateItemQuantity(item.id, -1)}>
+                  <button onClick={() => UpdateItemQuantity(item.id, -1)}>
                     -
                   </button>
                   <span>{item.quantity}</span>
-                  <button onClick={() => onUpdateItemQuantity(item.id, 1)}>
+                  <button onClick={() => UpdateItemQuantity(item.id, 1)}>
                     +
                   </button>
                 </div>
@@ -41,8 +44,3 @@ export default function Cart({ items, onUpdateItemQuantity }) {
     </div>
   );
 }
-
-Cart.propTypes = {
-  items: P.array,
-  onUpdateItemQuantity: P.func,
-};
